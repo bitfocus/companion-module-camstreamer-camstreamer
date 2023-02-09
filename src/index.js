@@ -47,7 +47,7 @@ class camstreamercamstreamerInstance extends InstanceBase {
         self.config.authtext
       )
       .then((result) => {
-        // console.log("processing streams"+result.status);
+         console.log("processing streams"+result.status);
         if (result.status == "200") {
           var resObj = result.data;
           self.camstreamer_enabled = true;
@@ -55,6 +55,25 @@ class camstreamercamstreamerInstance extends InstanceBase {
           self.updateStatus(InstanceStatus.Ok);
           self.getstreamstatus(self);
           console.log("camstreamer_streams : " + util.inspect(self.streamids));
+          {
+            self.getoverlays(self);
+            self.init_actions();
+            self.init_presets();
+            self.init_variables();
+            self.init_feedbacks();
+           
+            const interval = setInterval(function () {
+              console.log("repeater");
+              self.getstreamstatus(self);
+              self.checkFeedbacks();
+            }, 5000);
+      
+            clearInterval(interval);
+            //  self.getstreamstatus();
+            // self.init_actions(); // export actions
+      
+            self.checkFeedbacks(self);
+          }
         } else {
           //   console.log(
           //    "processing streams error" +
@@ -126,13 +145,13 @@ class camstreamercamstreamerInstance extends InstanceBase {
           self.camoverlay_enabled = true;
           self.processOverlayInformation(self, resObj);
         } else {
-          self.updateStatus(InstanceStatus.ConnectionFailure);
+          //self.updateStatus(InstanceStatus.ConnectionFailure);
           self.camoverlay_enabled = false;
         }
       })
       .catch((err) => {
         console.log("camsoverlay Error: " + util.inspect(err));
-        self.updateStatus(InstanceStatus.ConnectionFailure);
+       // self.updateStatus(InstanceStatus.ConnectionFailure);
       });
     var a = 1;
   }
@@ -354,33 +373,9 @@ class camstreamercamstreamerInstance extends InstanceBase {
       "debug",
       "authentication: " + util.inspect(this.config.authtext)
     );
-  this.streams.length = 0; 
-  this.streamids.length = 0;
-  this.overlays.length=0;
-  this.overlayids.length=0;
+ 
     await this.getstreams(this);
-    console.log("camstreamer_enabled : " + util.inspect(this.streamids));
- //  if (this.camstreamer_enabled) 
-// if (this.streamids.length > 0)
-    {
-      this.getoverlays(this);
-      this.init_actions();
-      this.init_presets();
-      this.init_variables();
-      this.init_feedbacks();
-     
-      const interval = setInterval(function () {
-        console.log("repeater");
-        this.getstreamstatus(this);
-        this.checkFeedbacks();
-      }, 5000);
-
-      clearInterval(interval);
-      //  this.getstreamstatus();
-      // this.init_actions(); // export actions
-
-      this.checkFeedbacks(this);
-    }
+ 
   }
   // Update module after a config change
   async configUpdated(config) {
@@ -407,31 +402,13 @@ class camstreamercamstreamerInstance extends InstanceBase {
       "debug",
       "authentication: " + util.inspect(this.config.authtext)
     );
-    this.streams.length = 0; 
-    this.streamids.length = 0;
-    this.overlays.length=0;
-    this.overlayids.length=0;
-    this.getstreams(this);
-    console.log("connectresult: " + this.camstreamer_enabled);
-  //  if (this.camstreamer_enabled == true) 
-    {
-      this.getoverlays(this);
-      this.init_actions();
-      this.init_presets();
-      this.init_variables();
-      this.init_feedbacks();
-      const interval = setInterval(function () {
-        console.log("repeater");
-        this.getstreamstatus(this);
-        this.checkFeedbacks();
-      }, 5000);
-
-      clearInterval(interval);
-      //  this.getstreamstatus();
-      // this.init_actions(); // export actions
-
-      this.checkFeedbacks(this);
-    }
+   // this.streams.length = 0; 
+   //// this.streamids.length = 0;
+   // this.overlays.length=0;
+   // this.overlayids.length=0;
+   this.getstreams(this);
+  
+  
   }
 
   // Return config fields for web config
