@@ -86,7 +86,7 @@ export function getActionDefinitions(self) {
   // ##########################
   // #### Stream Actions ####
   // ##########################
-  if (self.streamids.length > 0) {
+  if (self.camstreamer_enabled) {
     actions.stopstream = {
       name: "Stop Stream",
 
