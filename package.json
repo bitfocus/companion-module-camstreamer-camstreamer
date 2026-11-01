@@ -16,7 +16,7 @@
 		"@companion-module/base": "~1.4.3",
 		"got": "^12.5.3",
 		"ws": "8.21.0",
-		"urllib": "^3.10.0"
+		"urllib": "^4.9.1"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^2.8.0"
