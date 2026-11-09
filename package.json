@@ -13,12 +13,12 @@
 		"url": "git+https://github.com/bitfocus/companion-module-camstreamer-camstreamer.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.4.3",
+		"@companion-module/base": "~1.15.1",
 		"got": "^12.5.3",
 		"ws": "8.21.0",
 		"urllib": "^3.10.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.8.0"
+		"@companion-module/tools": "^2.9.1"
 	}
 }
